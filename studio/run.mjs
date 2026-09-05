@@ -1,12 +1,5 @@
-import {loadEnvFile} from 'node:process';
-import {existsSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
-const envPath = fileURLToPath(new URL('../.env', import.meta.url));
-if (existsSync(envPath)) loadEnvFile(envPath);
-process.env.SANITY_STUDIO_PROJECT_ID = process.env.PUBLIC_SANITY_PROJECT_ID;
-process.env.SANITY_STUDIO_DATASET = process.env.PUBLIC_SANITY_DATASET;
-if (!process.env.PUBLIC_SANITY_PROJECT_ID || !process.env.PUBLIC_SANITY_DATASET) throw new Error('Sanity project and dataset are required in the root .env');
 const result = spawnSync(process.execPath, ['node_modules/sanity/bin/sanity', ...process.argv.slice(2)], {cwd: fileURLToPath(new URL('.', import.meta.url)), stdio: 'inherit', env: process.env});
 if (result.error) throw result.error;
 process.exit(result.status ?? 1);
