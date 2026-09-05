@@ -1,0 +1,10 @@
+---
+import type {SocialLink} from '../lib/sanity';
+interface Props {links: SocialLink[]; class?: string}
+const {links, class: className = 'social-links'} = Astro.props;
+---
+{links.length > 0 && <div class={className}>
+  {links.map(link => <a class="social-link" href={link.url} title={link.platform === 'linkedin' ? 'LinkedIn' : 'Resume'} target="_blank" rel="noopener noreferrer" aria-label={`${link.platform === 'linkedin' ? 'LinkedIn' : 'Resume'} (opens in a new tab)`}>
+    {link.platform === 'linkedin' ? <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96C2 21.32 2.69 22 3.55 22h16.9c.86 0 1.55-.68 1.55-1.52V3.52C22 2.68 21.31 2 20.45 2ZM7.93 18.75H4.98V9.2h2.95v9.55ZM6.45 7.9a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42Zm12.3 10.85H15.8V14.1c0-1.11-.02-2.54-1.55-2.54-1.55 0-1.79 1.21-1.79 2.46v4.73H9.51V9.2h2.83v1.31h.04c.39-.75 1.36-1.55 2.8-1.55 2.99 0 3.57 1.97 3.57 4.53v5.26Z" /></svg> : <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6M8 12h8M8 16h6" /></svg>}
+  </a>)}
+</div>}

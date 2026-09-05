@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { getSiteSettings } from '../lib/sanity';
+
+const settings = await getSiteSettings();
+---
+
+<BaseLayout title="Page Not Found | Saqib Majeed">
+  <main class="not-found">
+    <h1 class="not-found__code">404</h1>
+    <p class="not-found__meta">Page not found.</p>
+    <hr class="not-found__divider" />
+    <a class="not-found__link" href="/">Return to home</a>
+  </main>
+  <SiteFooter settings={settings} />
+</BaseLayout>

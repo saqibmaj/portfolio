@@ -1,0 +1,45 @@
+---
+import type { ContentItem } from '../lib/sanity';
+
+interface Props {
+  item: ContentItem;
+}
+
+const { item } = Astro.props;
+
+const metaParts: string[] = [];
+if (item.type === 'article' && item.readTime) metaParts.push(`${item.readTime} min read`);
+---
+
+<a
+  class="content-row"
+  href={item.href}
+>
+  <div class="content-row__media">
+    {
+      item.imageUrl ? (
+        <img
+          src={item.imageUrl}
+          alt=""
+          width="320"
+          height="180"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="content-row__placeholder" aria-hidden="true"></div>
+      )
+    }
+  </div>
+  <div class="content-row__body">
+    {
+      metaParts.length > 0 && (
+        <p class="content-row__meta">
+          <span>{metaParts.join(' Â· ')}</span>
+        </p>
+      )
+    }
+    <h3 class="content-row__title">{item.title}</h3>
+    <p class="content-row__summary">{item.summary}</p>
+  </div>
+</a>

@@ -1,0 +1,13 @@
+---
+import ContentListItem from './ContentListItem.astro';
+import type {ContentItem} from '../lib/sanity';
+interface Props {heading: string; id: string; items: ContentItem[]; href?: string}
+const {heading, id, items, href} = Astro.props;
+---
+<section class="portfolio-section" aria-labelledby={id}>
+  <div class="section-label">
+    <h2 class="section-label__title" id={id}>{heading}</h2>
+    {href && <a class="section-label__meta" href={href}>View all <span class="sr-only">{heading}</span> →</a>}
+  </div>
+  {items.length ? <ul class="content-list">{items.map(item => <li><ContentListItem item={item} /></li>)}</ul> : <p class="content-empty">Nothing published here yet. Check back soon.</p>}
+</section>

@@ -1,0 +1,8 @@
+---
+import ContentDetail from '../../layouts/ContentDetail.astro';
+import {getContent} from '../../lib/sanity';
+export async function getStaticPaths() {
+  return (await getContent('project')).map(item => ({params: {slug: item.slug}, props: {item}}));
+}
+---
+<ContentDetail item={Astro.props.item} />

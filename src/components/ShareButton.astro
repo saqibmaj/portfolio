@@ -1,0 +1,42 @@
+---
+interface Props {
+  title: string;
+  text?: string;
+}
+
+const { title, text } = Astro.props;
+---
+
+<button
+  type="button"
+  class="share-button"
+  data-share
+  data-share-title={title}
+  data-share-text={text || ''}
+  hidden
+>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path>
+    <path d="M16 6l-4-4-4 4"></path>
+    <path d="M12 2v14"></path>
+  </svg>
+  <span>Share</span>
+</button>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-share]');
+  if (btn && typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+    btn.hidden = false;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.share({
+          title: btn.dataset.shareTitle || document.title,
+          text: btn.dataset.shareText || '',
+          url: window.location.href,
+        });
+      } catch {
+        // User cancelled or share failed — ignore.
+      }
+    });
+  }
+</script>

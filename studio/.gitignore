@@ -1,0 +1,6 @@
+dist
+.sanity
+schema.json
+*.log
+.env
+.env.*

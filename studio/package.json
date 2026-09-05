@@ -1,0 +1,23 @@
+{
+  "name": "saqib-majeed-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node run.mjs dev",
+    "start": "node run.mjs dev",
+    "build": "node run.mjs build",
+    "deploy": "node run.mjs deploy"
+  },
+  "dependencies": {
+    "@sanity/icons": "^3.7.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sanity": "^4.22.0",
+    "styled-components": "^6.1.18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "typescript": "^5.8.3"
+  }
+}

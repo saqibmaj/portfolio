@@ -1,0 +1,9 @@
+---
+import {DEFAULT_AUTHOR} from '../lib/sanity';
+interface Props {avatarUrl?: string}
+const {avatarUrl} = Astro.props;
+---
+<span class="author-name">
+  {avatarUrl && <img class="author-avatar" src={avatarUrl} alt="" width="28" height="28" loading="lazy" decoding="async" />}
+  {DEFAULT_AUTHOR}
+</span>

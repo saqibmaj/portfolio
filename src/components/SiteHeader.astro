@@ -1,0 +1,13 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import type {SocialLink} from '../lib/sanity';
+interface Props {title?: string; tagline?: string; socialLinks?: SocialLink[]}
+const {title = "Hi, I'm Saqib.", tagline = 'A selection of my projects, ideas, and writing.', socialLinks = []} = Astro.props;
+---
+<header class="site-header">
+  <h1 class="site-header__title">{title}</h1>
+  <p class="site-header__tagline">{tagline}</p>
+  <SocialLinks links={socialLinks} class="site-header__socials" />
+  {Astro.url.pathname !== '/' && <a class="home-link" href="/">← Back to home</a>}
+  <hr class="site-header__divider" />
+</header>

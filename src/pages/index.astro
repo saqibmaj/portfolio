@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ContentSection from '../components/ContentSection.astro';
+import {getContent, getSiteSettings} from '../lib/sanity';
+const [settings, projects, articles] = await Promise.all([getSiteSettings(), getContent('project'), getContent('article')]);
+---
+<BaseLayout title="Saqib Majeed" description={settings.tagline}>
+  <SiteHeader tagline={settings.tagline} socialLinks={settings.socialLinks} />
+  <main>
+    <ContentSection heading="Projects" id="projects" items={projects.slice(0, 5)} href="/projects" />
+    <ContentSection heading="Articles" id="articles" items={articles.slice(0, 5)} href="/articles" />
+  </main>
+  <SiteFooter settings={settings} />
+</BaseLayout>

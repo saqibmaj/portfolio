@@ -1,0 +1,19 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import AuthorName from './AuthorName.astro';
+import type {SiteSettings} from '../lib/sanity';
+interface Props {settings: SiteSettings}
+const {settings} = Astro.props;
+---
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand-col">
+      <a class="site-footer__brand" href="/"><AuthorName avatarUrl={settings.avatarUrl} /></a>
+      <SocialLinks links={settings.socialLinks} class="site-footer__socials" />
+    </div>
+    <nav class="site-footer__nav" aria-label="Quick links">
+      <a href="/projects">Projects</a>
+      <a href="/articles">Articles</a>
+    </nav>
+  </div>
+</footer>

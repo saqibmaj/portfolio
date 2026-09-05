@@ -1,0 +1,42 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AuthorName from '../components/AuthorName.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ContentSection from '../components/ContentSection.astro';
+import ArticleToc from '../components/ArticleToc.astro';
+import ShareButton from '../components/ShareButton.astro';
+import {getContent, getSiteSettings, type ContentItem} from '../lib/sanity';
+import {renderMarkdown} from '../lib/markdown';
+interface Props {item: ContentItem}
+const {item} = Astro.props;
+const [catalog, settings] = await Promise.all([getContent(item.type), getSiteSettings()]);
+const related = catalog.filter(other => other._id !== item._id).slice(0, 3);
+const {html, toc} = renderMarkdown(item.content);
+const section = item.type === 'project' ? 'projects' : 'articles';
+const date = item.date ? new Date(`${item.date}T00:00:00Z`) : null;
+const dateLabel = date && !Number.isNaN(date.valueOf()) ? new Intl.DateTimeFormat('en-US', {month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'}).format(date) : '';
+---
+<BaseLayout title={`${item.title} | Saqib Majeed`} description={item.summary} ogType={item.type === 'article' ? 'article' : 'website'} publishedTime={item.type === 'article' ? item.date : undefined} ogImage={item.imageUrl}>
+  <a class="back-link" href="/">← Back to home</a>
+  <div class:list={['article-shell', {'article-shell--with-toc': toc.length > 0}]}>
+    {toc.length > 0 && <ArticleToc items={toc} />}
+    <main>
+      <article>
+        <h1 class="article-title">{item.title}</h1>
+        <div class="article-meta">
+          <span class="article-meta__author"><AuthorName avatarUrl={settings.avatarUrl} /></span>
+          <div class="article-meta__rest">
+            {dateLabel && <time datetime={item.date}>{dateLabel}</time>}
+            {item.readTime && <span>{item.readTime} min read</span>}
+            <ShareButton title={item.title} text={item.summary} />
+          </div>
+        </div>
+        {item.imageUrl && <img class="article-thumbnail" src={item.imageUrl} alt="" width="960" height="540" />}
+        {item.type === 'project' && <p class="project-summary">{item.summary}</p>}
+        <div class="markdown-body" set:html={html} />
+      </article>
+      {related.length > 0 && <div class="related"><ContentSection heading={`More ${section}`} id="more-content" items={related} /></div>}
+    </main>
+  </div>
+  <SiteFooter settings={settings} />
+</BaseLayout>
